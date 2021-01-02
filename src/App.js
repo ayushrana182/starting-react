@@ -2,13 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './App.css';
 import styled from '@emotion/styled';
+import { Button, TextField } from '@material-ui/core';
 
 const PokemonRow = ({ pokemon, onSelect }) => (
   <tr>
     <td>{pokemon.name.english}</td>
     <td>{pokemon.type.join(',')}</td>
     <td>
-      <button onClick={() => onSelect(pokemon)}>Select!</button>
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={() => onSelect(pokemon)}
+      >
+        Select!
+      </Button>
     </td>
   </tr>
 );
@@ -59,23 +66,23 @@ const Title = styled.h1`
 `;
 
 const TwoColumnLayout = styled.div`
-  display: 'grid';
-  grid-template-columns: '70% 30%';
-  grid-column-gap: '1rem';
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-column-gap: 1rem;
 `;
 
 const Container = styled.div`
-  margin: 'auto';
+  margin: auto;
   width: 800px;
   padding-top: '1rem';
 `;
 
-const Input = styled.input`
-  width: 100%;
-  font-size: x-large;
-  padding: 0.2rem;
-}
-`;
+// const TextField = styled.input`
+//   width: 100%;
+//   font-size: x-large;
+//   padding: 0.2rem;
+// }
+// `;
 
 function App() {
   const [filter, filterSet] = React.useState('');
@@ -91,7 +98,15 @@ function App() {
   return (
     <Container>
       <Title>Pokemon Search</Title>
-      <Input value={filter} onChange={(evt) => filterSet(evt.target.value)} />
+
+      <TextField
+        id='outlined-basic'
+        label='Search Bar'
+        variant='outlined'
+        value={filter}
+        fullWidth
+        onChange={(evt) => filterSet(evt.target.value)}
+      />
       <TwoColumnLayout>
         <div>
           <table width='100%'>

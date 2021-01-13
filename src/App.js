@@ -1,64 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import './App.css';
 import styled from '@emotion/styled';
-import { Button, TextField } from '@material-ui/core';
-
-const PokemonRow = ({ pokemon, onSelect }) => (
-  <tr>
-    <td>{pokemon.name.english}</td>
-    <td>{pokemon.type.join(',')}</td>
-    <td>
-      <Button
-        variant='contained'
-        color='primary'
-        onClick={() => onSelect(pokemon)}
-      >
-        Select!
-      </Button>
-    </td>
-  </tr>
-);
-
-PokemonRow.propTypes = {
-  pokemon: PropTypes.shape({
-    pokemon: PropTypes.shape({
-      name: PropTypes.shape({
-        english: PropTypes.string.isRequired,
-      }),
-    }),
-    type: PropTypes.arrayOf(PropTypes.string.isRequired),
-  }),
-  onSelect: PropTypes.func.isRequired,
-};
-
-const PokemonInfo = ({ name, base }) => (
-  <div>
-    <h1>{name.english}</h1>
-    <table>
-      {Object.keys(base).map((key) => (
-        <tr key={key}>
-          <td>{key}</td>
-          <td>{base[key]}</td>
-        </tr>
-      ))}
-    </table>
-  </div>
-);
-
-PokemonInfo.propTypes = {
-  name: PropTypes.shape({
-    english: PropTypes.string.isRequired,
-  }),
-  base: PropTypes.shape({
-    HP: PropTypes.number.isRequired,
-    Attack: PropTypes.number.isRequired,
-    Defense: PropTypes.number.isRequired,
-    'Sp. Attack': PropTypes.number.isRequired,
-    'Sp. Defense': PropTypes.number.isRequired,
-    Speed: PropTypes.number.isRequired,
-  }),
-};
+import { TextField } from '@material-ui/core';
+import PokemonType from './PokemonType';
+import PokemonRow from './components/PokemonRow';
+import PokemonInfo from './components/PokemonInfo';
+import PokemonFilter from './components/PokemonFilter';
+import PokemonTable from './components/PokemonTable';
 
 //CSS in JS
 const Title = styled.h1`
@@ -77,13 +26,6 @@ const Container = styled.div`
   padding-top: '1rem';
 `;
 
-// const TextField = styled.input`
-//   width: 100%;
-//   font-size: x-large;
-//   padding: 0.2rem;
-// }
-// `;
-
 function App() {
   const [filter, filterSet] = React.useState('');
   const [pokemon, pokemonSet] = React.useState([]);
@@ -99,40 +41,16 @@ function App() {
     <Container>
       <Title>Pokemon Search</Title>
 
-      <TextField
-        id='outlined-basic'
-        label='Search Bar'
-        variant='outlined'
-        value={filter}
-        fullWidth
-        onChange={(evt) => filterSet(evt.target.value)}
-      />
       <TwoColumnLayout>
         <div>
-          <table width='100%'>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pokemon
-                .filter((pokemon) =>
-                  pokemon.name.english
-                    .toLowerCase()
-                    .includes(filter.toLowerCase())
-                )
-                .slice(0, 20)
-                .map((pokemon) => (
-                  <PokemonRow
-                    pokemon={pokemon}
-                    key={pokemon.id}
-                    onSelect={(pokemon) => selectedItemSet(pokemon)}
-                  />
-                ))}
-            </tbody>
-          </table>
+          <PokemonFilter
+            variant='outlined'
+            filter={filter}
+            fullWidth
+            filterSet={filterSet}
+          />
+
+          <PokemonTable filter={filter} filterSet={filterSet} />
         </div>
         {selectedItem && (
           <div>

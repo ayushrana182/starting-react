@@ -10,17 +10,18 @@ const PokemonTable = ({ pokemon, filter, selectedPokemonSet }) => (
       </tr>
     </thead>
     <tbody>
-      {pokemon
-        .filter(({ name: { english } }) =>
-          english.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        )
-        .slice(0, 20)
-        .map((pokemon) => (
-          <PokemonRow
-            pokemon={pokemon}
-            onSelect={(pokemon) => selectedPokemonSet(pokemon)}
-          />
-        ))}
+      {pokemon ||
+        []
+          .filter(({ name: { english } }) =>
+            english.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+          )
+          .slice(0, 20)
+          .map((pokemon) => (
+            <PokemonRow
+              pokemon={pokemon}
+              onSelect={(pokemon) => selectedPokemonSet(pokemon)}
+            />
+          ))}
     </tbody>
   </table>
 );

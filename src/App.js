@@ -29,11 +29,12 @@ const Container = styled.div`
 function App() {
   const [filter, filterSet] = React.useState('');
   const [pokemon, pokemonSet] = React.useState([]);
-  const [selectedItem, selectedItemSet] = React.useState(null);
+  const [selectedItem, selectedPokemonSet] = React.useState(null);
 
   React.useEffect(() => {
     fetch('http://localhost:3000/starting-react/pokemon.json')
-      .then((res) => res.json())
+      .then((resp) => resp.json())
+      .then((data) => JSON.stringify(data))
       .then((data) => pokemonSet(data));
   }, []);
 
@@ -50,7 +51,11 @@ function App() {
             filterSet={filterSet}
           />
 
-          <PokemonTable filter={filter} filterSet={filterSet} />
+          <PokemonTable
+            filter={filter}
+            pokemon={pokemon}
+            selectedPokemonSet={selectedPokemonSet}
+          />
         </div>
         {selectedItem && (
           <div>

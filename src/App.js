@@ -8,6 +8,7 @@ import PokemonRow from './components/PokemonRow';
 import PokemonInfo from './components/PokemonInfo';
 import PokemonFilter from './components/PokemonFilter';
 import PokemonTable from './components/PokemonTable';
+import PokemonContext from './components/PokemonContext';
 
 //CSS in JS
 const Title = styled.h1`
@@ -34,36 +35,41 @@ function App() {
   React.useEffect(() => {
     fetch('http://localhost:3000/starting-react/pokemon.json')
       .then((resp) => resp.json())
-      .then((data) => JSON.stringify(data))
+
       .then((data) => pokemonSet(data));
   }, []);
 
   return (
-    <Container>
-      <Title>Pokemon Search</Title>
+    <PokemonContext.Provider
+      value={{
+        filter,
+        pokemon,
+        selectedItem,
+        filterSet,
+        pokemonSet,
+        selectedPokemonSet,
+      }}
+    >
+      <Container>
+        <Title>Pokemon Search</Title>
 
-      <TwoColumnLayout>
-        <div>
-          <PokemonFilter
-            variant='outlined'
-            filter={filter}
-            fullWidth
-            filterSet={filterSet}
-          />
-
-          <PokemonTable
-            filter={filter}
-            pokemon={pokemon}
-            selectedPokemonSet={selectedPokemonSet}
-          />
-        </div>
-        {selectedItem && (
+        <TwoColumnLayout>
           <div>
-            <h1>{selectedItem && <PokemonInfo {...selectedItem} />}</h1>
+            <PokemonFilter variant='outlined' />
+
+            <PokemonTable />
           </div>
-        )}
-      </TwoColumnLayout>
-    </Container>
+          {selectedItem && (
+            <div>
+              <h1>
+                {' '}
+                <PokemonInfo />
+              </h1>
+            </div>
+          )}
+        </TwoColumnLayout>
+      </Container>
+    </PokemonContext.Provider>
   );
 }
 

@@ -1,11 +1,12 @@
 import { TextField } from '@material-ui/core';
-import React from 'react'
+import React from 'react';
+import PokemonContext from './PokemonContext';
 
-
- const PokemonFilter = ({filter, filterSet}) => {
-    return (
-        <div>
-             <TextField
+const PokemonFilter = () => {
+  const { filter, filterSet } = React.useContext(PokemonContext);
+  return (
+    <div>
+      <TextField
         id='outlined-basic'
         label='Search Bar'
         variant='outlined'
@@ -13,9 +14,8 @@ import React from 'react'
         fullWidth
         onChange={(evt) => filterSet(evt.target.value)}
       />
-        </div>
-    )
-}
-
+    </div>
+  );
+};
 
 export default PokemonFilter;

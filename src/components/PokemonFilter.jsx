@@ -3,7 +3,10 @@ import React from 'react';
 import PokemonContext from './PokemonContext';
 
 const PokemonFilter = () => {
-  const { filter, filterSet } = React.useContext(PokemonContext);
+  const {
+    state: { filter },
+    dispatch,
+  } = React.useContext(PokemonContext);
   return (
     <div>
       <TextField
@@ -12,7 +15,9 @@ const PokemonFilter = () => {
         variant='outlined'
         value={filter}
         fullWidth
-        onChange={(evt) => filterSet(evt.target.value)}
+        onChange={(evt) =>
+          dispatch({ type: 'SET_FILTER', payload: evt.target.value })
+        }
       />
     </div>
   );

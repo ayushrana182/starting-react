@@ -13,6 +13,7 @@ import PokemonContext from './components/PokemonContext';
 //Reducer
 
 const pokemonReducer = (state, action) => {
+  console.log(action);
   switch (action.type) {
     case 'SET_FILTER':
       return {
@@ -52,9 +53,6 @@ const Container = styled.div`
 `;
 
 function App() {
-  const [filter, filterSet] = React.useState('');
-  const [pokemon, pokemonSet] = React.useState([]);
-  const [selectedItem, selectedPokemonSet] = React.useState(null);
   const [state, dispatch] = React.useReducer(pokemonReducer, {
     pokemon: [],
     filter: '',
@@ -80,12 +78,6 @@ function App() {
   return (
     <PokemonContext.Provider
       value={{
-        filter,
-        pokemon,
-        selectedItem,
-        filterSet,
-        pokemonSet,
-        selectedPokemonSet,
         state,
         dispatch,
       }}
@@ -99,7 +91,7 @@ function App() {
 
             <PokemonTable />
           </div>
-          {selectedItem && (
+          {state.SET_SELECTED_POKEMON && (
             <div>
               <h1>
                 {' '}

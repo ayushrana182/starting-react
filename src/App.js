@@ -91,7 +91,7 @@ function App() {
 
             <PokemonTable />
           </div>
-          {state.SET_SELECTED_POKEMON && (
+          {state.selectedPokemon && (
             <div>
               <h1>
                 {' '}

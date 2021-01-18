@@ -62,6 +62,7 @@ const Container = styled.div`
 function App() {
   const dispatch = useDispatch();
   const pokemon = useSelector((state) => state.pokemon);
+  const selectedPokemon = useSelector((state) => state.selectedPokemon);
 
   React.useEffect(() => {
     fetch('http://localhost:3000/starting-react/pokemon.json')
@@ -89,7 +90,7 @@ function App() {
 
           <PokemonTable />
         </div>
-        {pokemonReducer.selectedPokemon && (
+        {selectedPokemon && (
           <div>
             <h1>
               {' '}

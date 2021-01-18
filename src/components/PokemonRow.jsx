@@ -11,7 +11,7 @@ const PokemonRow = ({ pokemon, onClick }) => (
       <Button
         variant='contained'
         color='primary'
-        onSelect={() => onClick(pokemon)}
+        onClick={() => onClick(pokemon)}
       >
         More Info
       </Button>
